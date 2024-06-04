@@ -1,19 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+
+
 import './App.css'
+import axios from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const fetchApi = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/users')
+      console.log(response.data.users)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    fetchApi()
+  }, [])
   return (
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+         
         </a>
       </div>
       <h1>Vite + React</h1>
