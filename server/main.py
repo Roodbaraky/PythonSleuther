@@ -1,18 +1,20 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-app =Flask(__name__)
-cors = CORS(app,origins='*')
+app = FastAPI()
 
-@app.route('/api/users', methods=['GET'])
-def users():
-    return jsonify({
-        'users': [
-            'john',
-            'ashley',
-            'sam'
-        ]
-    })
-    
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+async def main():
+    return {"message": "Hello World"}
